@@ -19,13 +19,13 @@ function App() {
   };
 
   const onDelete = () => {
-    console.log("ok on delte");
+    setCurrentGuess(currentGuess.split("").slice(0, -1).join(""));
   };
   return (
     <div className="App">
       <Navbar />
       <Display guess={currentGuess} />
-      <Keyboard onType={onType} />
+      <Keyboard onType={onType} onDelete={onDelete} />
     </div>
   );
 }

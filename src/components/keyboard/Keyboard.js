@@ -18,7 +18,7 @@ export const Keyboard = ({ onType, onEnter, onDelete }) => {
           Enter
         </Key>
         {["Z", "X", "C", "V", "B", "N", "M"].map((key) => (
-          <Key value={key} key={key} />
+          <Key value={key} key={key} onClick={onType} />
         ))}
         <Key value="DELETE" onClick={onDelete} isEnterOrDelete={true}>
           Delete
