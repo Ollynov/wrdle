@@ -15,7 +15,10 @@ function App() {
 
   const onType = (e) => {
     console.log("ok got value: ", e);
-    setCurrentGuess(`${currentGuess}${e}`);
+    if (currentGuess.length < WORD_SIZE) {
+      // only do something if the user hasn't already filled out the full row
+      setCurrentGuess(`${currentGuess}${e}`);
+    }
   };
 
   const onEnter = () => {
@@ -35,7 +38,14 @@ function App() {
       toast("Yay you won!");
       setGameOver(true);
       // do some confetti here
+    } else {
+      // set the guess, and move onto the next row
     }
+  };
+
+  const reset = () => {
+    setGameOver(false);
+    setCurrentGuess("");
   };
 
   const onDelete = () => {
@@ -51,6 +61,7 @@ function App() {
           <button
             type="button"
             className="mt-10 rounded-md bg-indigo-50 px-5 py-4 text-lg font-semibold text-indigo-600 shadow-sm hover:bg-indigo-100"
+            onClick={reset}
           >
             Play Again
           </button>
