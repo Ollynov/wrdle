@@ -3,6 +3,9 @@ import "./App.css";
 import { Navbar } from "./components/Navbar";
 import { Display } from "./components/mainDisplay/Display";
 import { Keyboard } from "./components/keyboard/Keyboard";
+import { WORD_SIZE } from "./data/constants";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const [currentGuess, setCurrentGuess] = useState("");
@@ -16,6 +19,10 @@ function App() {
     // check if good guess
     // record selection
     console.log("ok on enter");
+
+    if (currentGuess.length !== WORD_SIZE) {
+      return toast("Not enough letters for guess");
+    }
   };
 
   const onDelete = () => {
@@ -25,7 +32,8 @@ function App() {
     <div className="App">
       <Navbar />
       <Display guess={currentGuess} />
-      <Keyboard onType={onType} onDelete={onDelete} />
+      <Keyboard onType={onType} onDelete={onDelete} onEnter={onEnter} />
+      <ToastContainer />
     </div>
   );
 }
