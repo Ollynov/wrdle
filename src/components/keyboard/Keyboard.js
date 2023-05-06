@@ -2,7 +2,7 @@ import { Key } from "./Key";
 
 export const Keyboard = ({ onEnter, onDelete }) => {
   return (
-    <div>
+    <div className="mt-8">
       <div className="flex justify-center">
         {["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"].map((key) => (
           <Key value={key} key={key} />

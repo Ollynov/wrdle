@@ -3,8 +3,8 @@ export const Key = ({ onClick, value, isEnterOrDelete = false }) => {
     <button
       aria-label={`key`}
       className={`flex ${
-        isEnterOrDelete ? "w-20" : "w-8"
-      } h-8 items-center justify-center rounded mx-0.5 text-xs font-bold cursor-pointer select-none bg-gray-300 m-4`}
+        isEnterOrDelete ? "w-24" : "w-10"
+      } h-10 items-center justify-center rounded mx-0.5 text-md font-bold cursor-pointer select-none bg-gray-300 m-3`}
       onClick={onClick}
     >
       {value}
