@@ -12,6 +12,7 @@ import Confetti from "react-confetti";
 function App() {
   const [currentGuess, setCurrentGuess] = useState("");
   const [isGameOver, setGameOver] = useState(false);
+  const [allGuesses, setGuesses] = useState([]);
 
   const onType = (e) => {
     console.log("ok got value: ", e);
@@ -39,6 +40,8 @@ function App() {
       setGameOver(true);
       // do some confetti here
     } else {
+      setGuesses([...allGuesses, currentGuess]);
+      setCurrentGuess("");
       // set the guess, and move onto the next row
     }
   };
@@ -54,7 +57,7 @@ function App() {
   return (
     <div className="App">
       <Navbar />
-      <Display guess={currentGuess} />
+      <Display guess={currentGuess} allGuesses={allGuesses} />
       <Keyboard onType={onType} onDelete={onDelete} onEnter={onEnter} />
       {isGameOver && (
         <>

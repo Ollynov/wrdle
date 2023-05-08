@@ -1,20 +1,18 @@
-import { useEffect } from "react";
 import { NUM_OF_ATTEMPTS } from "./../../data/constants";
-import { SingleRow } from "./SingleRow";
+import { SingleGuessedRow, SingleEmptyRow } from "./SingleRow";
 import { ActiveRow } from "./ActiveRow";
 
-export const Display = ({ guess }) => {
-  const standardRows = Array.from(Array(NUM_OF_ATTEMPTS));
-
-  useEffect(() => {
-    console.log("ok current guess: ", guess);
-  }, [guess]);
+export const Display = ({ guess, allGuesses }) => {
+  const emptyRows = Array.from(Array(NUM_OF_ATTEMPTS - allGuesses.length - 1));
 
   return (
     <div className="mt-8">
-      <ActiveRow guess={guess} />
-      {standardRows.map((_, i) => (
-        <SingleRow key={i} />
+      {allGuesses.map((word, i) => (
+        <SingleGuessedRow word={word} key={i} />
+      ))}
+      {allGuesses.length < NUM_OF_ATTEMPTS && <ActiveRow guess={guess} />}
+      {emptyRows.map((_, i) => (
+        <SingleEmptyRow key={i} />
       ))}
     </div>
   );

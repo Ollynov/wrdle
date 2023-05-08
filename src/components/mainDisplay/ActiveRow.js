@@ -10,7 +10,7 @@ export const ActiveRow = ({ guess, className = "" }) => {
         <Cell key={i} value={letter} />
       ))}
       {wordsLeft.map((_, i) => (
-        <Cell key={i} />
+        <Cell key={i + guess.length} />
       ))}
     </div>
   );
