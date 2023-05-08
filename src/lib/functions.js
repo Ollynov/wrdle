@@ -18,19 +18,33 @@ export const isWinner = (word) => {
 
 export const getLetterPositions = (word) => {
   const solution = getSolution();
-  console.log("solution: ", solution);
   let letterPositions = [];
   word = word.toLowerCase();
+  let letterStorage = JSON.parse(localStorage.getItem("letterStorage")) || {};
 
   for (var i = 0; i < word.length; i++) {
+    let status = "invalid letter";
     if (solution[i] === word[i]) {
-      letterPositions.push("correct position");
+      status = "correct position";
     } else if (solution.includes(word[i])) {
-      letterPositions.push("wrong position");
-    } else {
-      letterPositions.push("invalid letter");
+      status = "wrong position";
     }
+    letterStorage[word[i]] = status;
+    letterPositions.push(status);
   }
 
+  localStorage.setItem("letterStorage", JSON.stringify(letterStorage));
+
   return letterPositions;
+};
+
+export const returnBackgroundColor = (letterPosition) => {
+  let backgroundColor = "bg-gray-300";
+  if (letterPosition === "wrong position") {
+    backgroundColor = "bg-yellow-200";
+  } else if (letterPosition === "correct position") {
+    backgroundColor = "bg-green-200";
+  }
+
+  return backgroundColor;
 };

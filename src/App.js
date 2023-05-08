@@ -12,7 +12,10 @@ import Confetti from "react-confetti";
 function App() {
   const [currentGuess, setCurrentGuess] = useState("");
   const [isGameOver, setGameOver] = useState(false);
-  const [allGuesses, setGuesses] = useState([]);
+  const [allGuesses, setGuesses] = useState(
+    JSON.parse(localStorage.getItem("allGuesses")) || []
+  );
+  const [isAnimating, setIsAnimating] = useState(false);
 
   const onType = (e) => {
     console.log("ok got value: ", e);
@@ -31,6 +34,13 @@ function App() {
       return toast("Not a valid word");
     }
 
+    setIsAnimating(true);
+    // turn this back off after all
+    // chars have been revealed
+    setTimeout(() => {
+      setIsAnimating(false);
+    }, 400 * WORD_SIZE);
+
     const isWinningWord = isWinner(currentGuess);
 
     console.log(isWinningWord);
@@ -40,7 +50,9 @@ function App() {
       setGameOver(true);
       // do some confetti here
     } else {
-      setGuesses([...allGuesses, currentGuess]);
+      const temp = [...allGuesses, currentGuess];
+      setGuesses(temp);
+      localStorage.setItem("allGuesses", JSON.stringify(temp));
       setCurrentGuess("");
       // set the guess, and move onto the next row
     }
@@ -58,7 +70,12 @@ function App() {
     <div className="App">
       <Navbar />
       <Display guess={currentGuess} allGuesses={allGuesses} />
-      <Keyboard onType={onType} onDelete={onDelete} onEnter={onEnter} />
+      <Keyboard
+        onType={onType}
+        onDelete={onDelete}
+        onEnter={onEnter}
+        isAnimating={isAnimating}
+      />
       {isGameOver && (
         <>
           <button

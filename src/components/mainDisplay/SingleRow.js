@@ -1,5 +1,5 @@
 import { WORD_SIZE } from "../../data/constants";
-import { getLetterPositions } from "../../lib/functions";
+import { getLetterPositions, returnBackgroundColor } from "../../lib/functions";
 
 export const Cell = ({ value }) => {
   return (
@@ -10,12 +10,8 @@ export const Cell = ({ value }) => {
 };
 
 const CellFilled = ({ value, letterPosition }) => {
-  let backgroundColor = "bg-gray-200";
-  if (letterPosition === "wrong position") {
-    backgroundColor = "bg-yellow-200";
-  } else if (letterPosition === "correct position") {
-    backgroundColor = "bg-green-200";
-  }
+  const backgroundColor = returnBackgroundColor(letterPosition);
+
   return (
     <div
       className={`w-14 h-14 border-solid border-4 flex items-center justify-center mx-1 text-4xl rounded ${backgroundColor}`}
