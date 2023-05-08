@@ -3,7 +3,8 @@ import { SingleGuessedRow, SingleEmptyRow } from "./SingleRow";
 import { ActiveRow } from "./ActiveRow";
 
 export const Display = ({ guess, allGuesses }) => {
-  const emptyRows = Array.from(Array(NUM_OF_ATTEMPTS - allGuesses.length - 1));
+  const emptyRowCount = NUM_OF_ATTEMPTS - allGuesses.length - 1;
+  const emptyRows = emptyRowCount >= 0 ? Array.from(Array(emptyRowCount)) : [];
 
   return (
     <div className="mt-8">

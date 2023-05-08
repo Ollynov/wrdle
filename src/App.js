@@ -11,7 +11,9 @@ import Confetti from "react-confetti";
 
 function App() {
   const [currentGuess, setCurrentGuess] = useState("");
-  const [isGameOver, setGameOver] = useState(false);
+  const [isGameOver, setGameOver] = useState(
+    localStorage.getItem("isGameOver") || false
+  );
   const [allGuesses, setGuesses] = useState(
     JSON.parse(localStorage.getItem("allGuesses")) || []
   );
@@ -45,22 +47,23 @@ function App() {
 
     console.log(isWinningWord);
 
+    const temp = [...allGuesses, currentGuess];
+    setGuesses(temp);
+    localStorage.setItem("allGuesses", JSON.stringify(temp));
+    setCurrentGuess("");
+
     if (isWinningWord) {
       toast("Yay you won!");
       setGameOver(true);
+      localStorage.setItem("isGameOver", true);
       // do some confetti here
-    } else {
-      const temp = [...allGuesses, currentGuess];
-      setGuesses(temp);
-      localStorage.setItem("allGuesses", JSON.stringify(temp));
-      setCurrentGuess("");
-      // set the guess, and move onto the next row
     }
   };
 
   const reset = () => {
     setGameOver(false);
     setCurrentGuess("");
+    localStorage.setItem("isGameOver", false);
   };
 
   const onDelete = () => {
