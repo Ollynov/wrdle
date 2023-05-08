@@ -3,7 +3,7 @@ import "./App.css";
 import { Navbar } from "./components/Navbar";
 import { Display } from "./components/mainDisplay/Display";
 import { Keyboard } from "./components/keyboard/Keyboard";
-import { WORD_SIZE } from "./data/constants";
+import { WORD_SIZE, NUM_OF_ATTEMPTS } from "./data/constants";
 import { ToastContainer, toast } from "react-toastify";
 import { isWordValid, isWinner } from "./lib/functions";
 import "react-toastify/dist/ReactToastify.css";
@@ -37,8 +37,7 @@ function App() {
     }
 
     setIsAnimating(true);
-    // turn this back off after all
-    // chars have been revealed
+
     setTimeout(() => {
       setIsAnimating(false);
     }, 400 * WORD_SIZE);
@@ -51,18 +50,27 @@ function App() {
     setGuesses(temp);
     localStorage.setItem("allGuesses", JSON.stringify(temp));
     setCurrentGuess("");
-
+    console.log("ok temp lenth: ", temp.length);
     if (isWinningWord) {
       toast("Yay you won!");
-      setGameOver(true);
-      localStorage.setItem("isGameOver", true);
+      setGameOver("winner");
+      localStorage.setItem("isGameOver", "winner");
       // do some confetti here
+    } else if (temp.length === NUM_OF_ATTEMPTS) {
+      // loser!
+      console.log("ok in here...");
+      toast("Oh no! You lost, better luck next time friend.");
+      setGameOver("loser");
+      localStorage.setItem("isGameOver", "loser");
     }
   };
 
   const reset = () => {
     setGameOver(false);
     setCurrentGuess("");
+    setGuesses([]);
+    localStorage.setItem("allGuesses", JSON.stringify([]));
+    localStorage.setItem("letterStorage", JSON.stringify({}));
     localStorage.setItem("isGameOver", false);
   };
 
@@ -79,7 +87,7 @@ function App() {
         onEnter={onEnter}
         isAnimating={isAnimating}
       />
-      {isGameOver && (
+      {isGameOver === "winner" && (
         <>
           <button
             type="button"
@@ -94,8 +102,18 @@ function App() {
             style={{ margin: "auto" }}
           />
         </>
+      )}{" "}
+      {isGameOver === "loser" && (
+        <>
+          <button
+            type="button"
+            className="mt-10 rounded-md bg-indigo-50 px-5 py-4 text-lg font-semibold text-indigo-600 shadow-sm hover:bg-indigo-100"
+            onClick={reset}
+          >
+            Try Again
+          </button>
+        </>
       )}
-
       <ToastContainer />
     </div>
   );
