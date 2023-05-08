@@ -26,7 +26,6 @@ export const getLetterPositions = (word) => {
     if (solution[i] === word[i]) {
       letterPositions.push("correct position");
     } else if (solution.includes(word[i])) {
-      console.log("ok got wrong position for ", word[i]);
       letterPositions.push("wrong position");
     } else {
       letterPositions.push("invalid letter");
