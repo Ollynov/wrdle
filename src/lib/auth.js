@@ -1,27 +1,25 @@
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-const provider = new GoogleAuthProvider();
+// import Toastify from "toastify-js";
+// import "toastify-js/src/toastify.css";
+import { auth } from "./firebase";
+import {
+  GoogleAuthProvider,
+  signInWithPopup,
+  browserPopupRedirectResolver,
+} from "firebase/auth";
 
-const auth = getAuth();
+const googleProvider = new GoogleAuthProvider();
 
-export const signInGoogle = () => {
-  signInWithPopup(auth, provider)
-    .then((result) => {
-      // This gives you a Google Access Token. You can use it to access the Google API.
-      const credential = GoogleAuthProvider.credentialFromResult(result);
-      const token = credential.accessToken;
-      // The signed-in user info.
-      const user = result.user;
-      // IdP data available using getAdditionalUserInfo(result)
-      // ...
+// const auth = getAuth();
+
+export async function googleLogin() {
+  // return signInWithPopup(auth, googleProvider)
+  return signInWithPopup(auth, googleProvider, browserPopupRedirectResolver)
+    .then((res) => {
+      if (res.user) console.log("ok logged in user: ", res.user);
+
+      return res.user;
     })
     .catch((error) => {
-      // Handle Errors here.
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // The email of the user's account used.
-      const email = error.customData.email;
-      // The AuthCredential type that was used.
-      const credential = GoogleAuthProvider.credentialFromError(error);
-      // ...
+      console.error("error logging in google user: ", error);
     });
-};
+}
