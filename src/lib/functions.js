@@ -15,3 +15,23 @@ const getSolution = () => {
 export const isWinner = (word) => {
   return word.toLowerCase() === getSolution();
 };
+
+export const getLetterPositions = (word) => {
+  const solution = getSolution();
+  console.log("solution: ", solution);
+  let letterPositions = [];
+  word = word.toLowerCase();
+
+  for (var i = 0; i < word.length; i++) {
+    if (solution[i] === word[i]) {
+      letterPositions.push("correct position");
+    } else if (solution.includes(word[i])) {
+      console.log("ok got wrong position for ", word[i]);
+      letterPositions.push("wrong position");
+    } else {
+      letterPositions.push("invalid letter");
+    }
+  }
+
+  return letterPositions;
+};

@@ -1,4 +1,5 @@
 import { WORD_SIZE } from "../../data/constants";
+import { getLetterPositions } from "../../lib/functions";
 
 export const Cell = ({ value }) => {
   return (
@@ -22,13 +23,22 @@ const CellFilled = ({ value, letterPosition }) => {
 
 export const SingleGuessedRow = ({ word }) => {
   const allCells = word ? word.split("") : Array.from(Array(WORD_SIZE));
+  const letterPositions = getLetterPositions(word); // ['wrong position', 'invalid letter', 'correct position']
 
+  console.log("lettter positions: ", letterPositions);
   return (
     <div className="mb-1 flex justify-center">
-      {allCells.map((letter, i) => (
-        // status as truthy means that it's a correct letter guess, either in word or in the word+correct position
-        <CellFilled key={i} value={letter} letterPosition={""} />
-      ))}
+      {allCells.map((letter, i) => {
+        return letterPositions[i] === "invalid letter" ? (
+          <Cell key={i} value={letter} />
+        ) : (
+          <CellFilled
+            key={i}
+            value={letter}
+            letterPosition={letterPositions[i]}
+          />
+        );
+      })}
     </div>
   );
 };
