@@ -3,6 +3,7 @@
 // import { Fragment } from "react";
 import { BaseModal } from "./Default";
 import { googleLogin } from "../../lib/auth";
+import { useUserData } from "../../lib/authHook";
 
 const GoogleLoginButton = ({ onClick }) => {
   return (
@@ -23,9 +24,17 @@ const GoogleLoginButton = ({ onClick }) => {
 };
 
 export const StatsModal = ({ title, children, isOpen, handleClose }) => {
+  let userData = useUserData();
+
+  console.log("ok got this data: ", userData);
+
   return (
-    <BaseModal title={"Yo Gotti"} isOpen={isOpen} handleClose={handleClose}>
-      <GoogleLoginButton onClick={googleLogin} />
+    <BaseModal isOpen={isOpen} handleClose={handleClose}>
+      {userData?.user?.displayName ? (
+        <h1>{userData.user.displayName} Stats</h1>
+      ) : (
+        <GoogleLoginButton onClick={googleLogin} />
+      )}
     </BaseModal>
   );
 };

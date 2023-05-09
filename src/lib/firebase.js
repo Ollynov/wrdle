@@ -8,8 +8,8 @@ import {
   browserSessionPersistence,
   initializeAuth,
 } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
-console.log("api: ", process.env);
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -32,3 +32,5 @@ export const auth = initializeAuth(firebaseApp, {
     browserSessionPersistence,
   ],
 });
+
+export const firestore = getFirestore(firebaseApp);
