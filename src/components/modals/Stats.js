@@ -4,6 +4,7 @@
 import { BaseModal } from "./Default";
 import { googleLogin, Signout } from "../../lib/auth";
 import { useUserData } from "../../lib/authHook";
+import { NUM_OF_ATTEMPTS } from "../../data/constants";
 
 const GoogleLoginButton = ({ onClick }) => {
   return (
@@ -33,20 +34,23 @@ const Item = ({ header, value }) => {
 
 export const StatsModal = ({ title, children, isOpen, handleClose }) => {
   let userData = useUserData();
+  const numOfAttempts = Array.from(Array(NUM_OF_ATTEMPTS + 1)); // manually adding one here because we want to loop over our "loss" data as well;
 
-  console.log("ok got this data: ", userData);
-  const successRate =
-    ((userData.userData.gamesPlayed -
-      (userData.userData.gameStatus["loss"] || 0)) /
-      userData.userData.gamesPlayed) *
-    100;
+  let successRate = 0;
+  if (userData?.userData) {
+    successRate =
+      ((userData.userData.gamesPlayed -
+        (userData.userData.gameStatus["loss"] || 0)) /
+        userData.userData.gamesPlayed) *
+      100;
+  }
 
   return (
     <BaseModal isOpen={isOpen} handleClose={handleClose}>
       {userData?.userData?.name ? (
         <>
           <h1 className="my-4 font-bold text-lg">
-            {userData.user.displayName} Stats
+            {userData?.user?.displayName} Stats
           </h1>
           <div className="flex flex-col">
             <Item header="Games Played" value={userData.userData.gamesPlayed} />
@@ -59,6 +63,24 @@ export const StatsModal = ({ title, children, isOpen, handleClose }) => {
               value={userData.userData.longestStreak}
             />
             <Item header="Success %" value={successRate || "0%"} />
+            <h3 className="my-4 font-bold  text-lg">Success Breakdown</h3>
+            {numOfAttempts.map((_, i) => {
+              return (
+                <Item
+                  key={i}
+                  header={
+                    i === numOfAttempts.length - 1
+                      ? `Losses`
+                      : `${i + 1} guesses`
+                  }
+                  value={
+                    i === numOfAttempts.length - 1
+                      ? userData.userData.gameStatus["loss"]
+                      : userData.userData.gameStatus[i + 1] || 0
+                  }
+                />
+              );
+            })}
           </div>
           <button
             onClick={Signout}

@@ -1,7 +1,4 @@
-import {
-  IdentificationIcon,
-  InformationCircleIcon,
-} from "@heroicons/react/24/outline";
+import { IdentificationIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { StatsModal } from "./modals/Stats";
 
@@ -15,10 +12,6 @@ export const Navbar = () => {
         <IdentificationIcon
           className="w-7 cursor-pointer mr-4"
           onClick={() => setStatsModal(true)}
-        />
-        <InformationCircleIcon
-          className="w-7 cursor-pointer"
-          // onClick={() => setModal(true)}
         />
       </div>
       <StatsModal
