@@ -1,5 +1,7 @@
 # Project Overview
 
+Deployed here: https://wordle-af6b0.web.app/
+
 The objective here was to build out the minimal requirements for a Wordle App, with some data persistance that shows the user's stats.
 
 Some known limitations:
@@ -13,6 +15,7 @@ Some known limitations:
 - No keyboard inputs, only online keyboard that requires clicks
 - Limited comments in the code
 - Limited security at Firebase level, anyone with the credentials can read and write from it
+- Not error handling edge cases: incorrect logins, working on same browser with multiple users, etc.
 
 ## Available Scripts
 
