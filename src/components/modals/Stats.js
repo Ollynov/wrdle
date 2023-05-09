@@ -37,7 +37,7 @@ export const StatsModal = ({ title, children, isOpen, handleClose }) => {
   const numOfAttempts = Array.from(Array(NUM_OF_ATTEMPTS + 1)); // manually adding one here because we want to loop over our "loss" data as well;
 
   let successRate = 0;
-  if (userData?.userData) {
+  if (userData?.userData?.gamesPlayed) {
     successRate =
       ((userData.userData.gamesPlayed -
         (userData.userData.gameStatus["loss"] || 0)) /
@@ -47,7 +47,7 @@ export const StatsModal = ({ title, children, isOpen, handleClose }) => {
 
   return (
     <BaseModal isOpen={isOpen} handleClose={handleClose}>
-      {userData?.userData?.name ? (
+      {userData?.userData?.gamesPlayed ? (
         <>
           <h1 className="my-4 font-bold text-lg">
             {userData?.user?.displayName} Stats
@@ -75,7 +75,7 @@ export const StatsModal = ({ title, children, isOpen, handleClose }) => {
                   }
                   value={
                     i === numOfAttempts.length - 1
-                      ? userData.userData.gameStatus["loss"]
+                      ? userData.userData.gameStatus["loss"] || 0
                       : userData.userData.gameStatus[i + 1] || 0
                   }
                 />
