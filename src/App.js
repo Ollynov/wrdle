@@ -57,6 +57,11 @@ function App() {
       setGameOver("winner");
       localStorage.setItem("isGameOver", "winner");
       // do some confetti here
+      saveGamePlayed(
+        userData.user.uid,
+        userData.userData,
+        allGuesses.length + 1
+      );
     }
 
     if (temp.length === NUM_OF_ATTEMPTS && !isWinningWord) {
@@ -64,15 +69,7 @@ function App() {
       toast("Oh no! You lost, better luck next time friend.");
       setGameOver("loser");
       localStorage.setItem("isGameOver", "loser");
-    }
-
-    if (temp.length === NUM_OF_ATTEMPTS || isWinningWord) {
-      // end of game, so store to firebase
-      saveGamePlayed(
-        userData.user.uid,
-        userData.userData,
-        isGameOver === "loser" ? "loss" : allGuesses.length + 1
-      );
+      saveGamePlayed(userData.user.uid, userData.userData, "loss");
     }
   };
 

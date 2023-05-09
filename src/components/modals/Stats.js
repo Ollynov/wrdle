@@ -23,21 +23,42 @@ const GoogleLoginButton = ({ onClick }) => {
   );
 };
 
+const Item = ({ header, value }) => {
+  return (
+    <div className="flex flex-start mx-4 my-2">
+      <span>{header}</span> <span className="ml-4 font-bold">{value}</span>
+    </div>
+  );
+};
+
 export const StatsModal = ({ title, children, isOpen, handleClose }) => {
   let userData = useUserData();
 
   console.log("ok got this data: ", userData);
+  const successRate =
+    ((userData.userData.gamesPlayed -
+      (userData.userData.gameStatus["loss"] || 0)) /
+      userData.userData.gamesPlayed) *
+    100;
 
   return (
     <BaseModal isOpen={isOpen} handleClose={handleClose}>
-      {userData?.user?.displayName ? (
+      {userData?.userData?.name ? (
         <>
-          <h1>{userData.user.displayName} Stats</h1>
-          <div className="flex flex-row">
-            <div>Games Played {userData.userData.gamesPlayed}</div>
-            <div>Current Streak {userData.userData.currentStreak}</div>
-            <div>Longest Streak {userData.userData.longestStreak}</div>
-            <div>Success % {userData.userData.gamesPlayed}</div>
+          <h1 className="my-4 font-bold text-lg">
+            {userData.user.displayName} Stats
+          </h1>
+          <div className="flex flex-col">
+            <Item header="Games Played" value={userData.userData.gamesPlayed} />
+            <Item
+              header="Current Streak"
+              value={userData.userData.currentStreak}
+            />
+            <Item
+              header="Longest Streak"
+              value={userData.userData.longestStreak}
+            />
+            <Item header="Success %" value={successRate || "0%"} />
           </div>
           <button
             onClick={Signout}
