@@ -27,10 +27,10 @@ export const createUser = async (uid, data) => {
 export const Signout = async () => {
   signOut(auth)
     .then((res) => {
-      console.log("here we are: ", res);
+      console.log("signed user out: ", res);
     })
     .catch((error) => {
-      console.log("ok here is err: ", error);
+      console.log("ok here is err while signing out: ", error);
     });
 };
 

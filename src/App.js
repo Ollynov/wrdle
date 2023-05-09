@@ -23,7 +23,6 @@ function App() {
   let userData = useUserData();
 
   const onType = (e) => {
-    console.log("ok got value: ", e);
     if (currentGuess.length < WORD_SIZE) {
       // only do something if the user hasn't already filled out the full row
       setCurrentGuess(`${currentGuess}${e}`);
@@ -46,8 +45,6 @@ function App() {
     }, 400 * WORD_SIZE);
 
     const isWinningWord = isWinner(currentGuess);
-
-    console.log(isWinningWord);
 
     const temp = [...allGuesses, currentGuess];
     setGuesses(temp);

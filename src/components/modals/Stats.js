@@ -33,6 +33,12 @@ export const StatsModal = ({ title, children, isOpen, handleClose }) => {
       {userData?.user?.displayName ? (
         <>
           <h1>{userData.user.displayName} Stats</h1>
+          <div className="flex flex-row">
+            <div>Games Played {userData.userData.gamesPlayed}</div>
+            <div>Current Streak {userData.userData.currentStreak}</div>
+            <div>Longest Streak {userData.userData.longestStreak}</div>
+            <div>Success % {userData.userData.gamesPlayed}</div>
+          </div>
           <button
             onClick={Signout}
             href="#"
