@@ -4,6 +4,7 @@ import { auth, firestore } from "./firebase";
 import {
   GoogleAuthProvider,
   signInWithPopup,
+  signOut,
   browserPopupRedirectResolver,
 } from "firebase/auth";
 import { setDoc, doc } from "firebase/firestore";
@@ -20,6 +21,16 @@ export const createUser = async (uid, data) => {
     .catch((err) => {
       console.log("error creating user: ", err);
       throw err;
+    });
+};
+
+export const Signout = async () => {
+  signOut(auth)
+    .then((res) => {
+      console.log("here we are: ", res);
+    })
+    .catch((error) => {
+      console.log("ok here is err: ", error);
     });
 };
 

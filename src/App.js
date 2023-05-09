@@ -8,6 +8,8 @@ import { ToastContainer, toast } from "react-toastify";
 import { isWordValid, isWinner } from "./lib/functions";
 import "react-toastify/dist/ReactToastify.css";
 import Confetti from "react-confetti";
+import { saveGamePlayed } from "./lib/userService";
+import { useUserData } from "./lib/authHook";
 
 function App() {
   const [currentGuess, setCurrentGuess] = useState("");
@@ -18,6 +20,7 @@ function App() {
     JSON.parse(localStorage.getItem("allGuesses")) || []
   );
   const [isAnimating, setIsAnimating] = useState(false);
+  let userData = useUserData();
 
   const onType = (e) => {
     console.log("ok got value: ", e);
@@ -50,18 +53,29 @@ function App() {
     setGuesses(temp);
     localStorage.setItem("allGuesses", JSON.stringify(temp));
     setCurrentGuess("");
-    console.log("ok temp lenth: ", temp.length);
+
     if (isWinningWord) {
+      // winner!
       toast("Yay you won!");
       setGameOver("winner");
       localStorage.setItem("isGameOver", "winner");
       // do some confetti here
-    } else if (temp.length === NUM_OF_ATTEMPTS) {
+    }
+
+    if (temp.length === NUM_OF_ATTEMPTS && !isWinningWord) {
       // loser!
-      console.log("ok in here...");
       toast("Oh no! You lost, better luck next time friend.");
       setGameOver("loser");
       localStorage.setItem("isGameOver", "loser");
+    }
+
+    if (temp.length === NUM_OF_ATTEMPTS || isWinningWord) {
+      // end of game, so store to firebase
+      saveGamePlayed(
+        userData.user.uid,
+        userData.userData,
+        isGameOver === "loser" ? "loss" : allGuesses.length + 1
+      );
     }
   };
 
