@@ -7,6 +7,8 @@ The objective here was to build out the minimal requirements for a Wordle App, w
 Some known limitations:
 
 - No unit tests
+- Minimally refactored
+- Only one challenge per day (altho it seems this is the standard with Wordle game)
 - The "word of the day" is selected based on day and month, so every year it will be rotating the same list of words
 - No API used for the word list, just a list of 5 letter words
 - No "Hard mode" or advanced features

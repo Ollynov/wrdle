@@ -10,7 +10,6 @@ import "react-toastify/dist/ReactToastify.css";
 import Confetti from "react-confetti";
 import { saveGamePlayed } from "./lib/userService";
 import { useUserData } from "./lib/authHook";
-import { ALL_WORDS } from "./data/allWords";
 
 function App() {
   const [currentGuess, setCurrentGuess] = useState("");
@@ -23,7 +22,6 @@ function App() {
   const [isAnimating, setIsAnimating] = useState(false);
   let userData = useUserData();
 
-  console.log(ALL_WORDS.length);
   const onType = (e) => {
     if (currentGuess.length < WORD_SIZE) {
       // only do something if the user hasn't already filled out the full row
@@ -103,13 +101,14 @@ function App() {
       />
       {isGameOver === "winner" && (
         <>
+          {/* Seems the wordle game onnly allows for one daily play
           <button
             type="button"
             className="mt-10 rounded-md bg-indigo-50 px-5 py-4 text-lg font-semibold text-indigo-600 shadow-sm hover:bg-indigo-100"
             onClick={reset}
           >
             Play Again
-          </button>
+          </button> */}
           <Confetti
             width={"1000px"}
             height={"900"}
