@@ -116,6 +116,9 @@ function App() {
           >
             Play Again
           </button> */}
+          <h2 className="text-lg mt-6 font-semibold">
+            You won! Come back tomorrow for another challenge.
+          </h2>
           <Confetti
             width={"1000px"}
             height={"900"}
