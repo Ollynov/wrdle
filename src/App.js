@@ -14,8 +14,8 @@ import { useUserData } from "./lib/authHook";
 function App() {
   const [currentGuess, setCurrentGuess] = useState("");
   const [isGameOver, setGameOver] = useState(
-    localStorage.getItem("isGameOver") || false
-  );
+    localStorage.getItem("isGameOver") || "not started"
+  ); // winner, loser, or not started
   const [allGuesses, setGuesses] = useState(
     JSON.parse(localStorage.getItem("allGuesses")) || []
   );
@@ -23,13 +23,17 @@ function App() {
   let userData = useUserData();
 
   const onType = (e) => {
-    if (currentGuess.length < WORD_SIZE) {
+    if (isGameOver === "not started" && currentGuess.length < WORD_SIZE) {
       // only do something if the user hasn't already filled out the full row
       setCurrentGuess(`${currentGuess}${e}`);
     }
   };
 
   const onEnter = () => {
+    if (isGameOver !== "not started") {
+      return; // no reason to respond to button click if game is over
+    }
+
     if (currentGuess.length !== WORD_SIZE) {
       return toast("Not enough letters for guess");
     }
@@ -78,15 +82,18 @@ function App() {
   };
 
   const reset = () => {
-    setGameOver(false);
+    setGameOver("not started");
     setCurrentGuess("");
     setGuesses([]);
     localStorage.setItem("allGuesses", JSON.stringify([]));
     localStorage.setItem("letterStorage", JSON.stringify({}));
-    localStorage.setItem("isGameOver", false);
+    localStorage.setItem("isGameOver", "not started");
   };
 
   const onDelete = () => {
+    if (isGameOver !== "not started") {
+      return; // no reason to respond to button click if game is over
+    }
     setCurrentGuess(currentGuess.split("").slice(0, -1).join(""));
   };
   return (
@@ -101,8 +108,8 @@ function App() {
       />
       {isGameOver === "winner" && (
         <>
-          {/* Seems the wordle game onnly allows for one daily play
-          <button
+          {/* Seems the wordle game onnly allows for one daily play */}
+          {/* <button
             type="button"
             className="mt-10 rounded-md bg-indigo-50 px-5 py-4 text-lg font-semibold text-indigo-600 shadow-sm hover:bg-indigo-100"
             onClick={reset}
