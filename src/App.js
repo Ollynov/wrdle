@@ -10,6 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Confetti from "react-confetti";
 import { saveGamePlayed } from "./lib/userService";
 import { useUserData } from "./lib/authHook";
+import { ALL_WORDS } from "./data/allWords";
 
 function App() {
   const [currentGuess, setCurrentGuess] = useState("");
@@ -22,6 +23,7 @@ function App() {
   const [isAnimating, setIsAnimating] = useState(false);
   let userData = useUserData();
 
+  console.log(ALL_WORDS.length);
   const onType = (e) => {
     if (currentGuess.length < WORD_SIZE) {
       // only do something if the user hasn't already filled out the full row

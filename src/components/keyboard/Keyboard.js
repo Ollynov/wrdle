@@ -4,7 +4,7 @@ export const Keyboard = ({ onType, onEnter, onDelete, isAnimating }) => {
   let letterStorage = JSON.parse(localStorage.getItem("letterStorage")) || {};
 
   return (
-    <div className="mt-8">
+    <div className="mt-8 px-2 md:px-0">
       <div className="flex justify-center">
         {["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"].map((key) => (
           <Key

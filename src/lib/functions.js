@@ -12,6 +12,12 @@ const getSolution = () => {
   return ALL_WORDS[index];
 };
 
+const getRandSolution = () => {
+  const randIdx = Math.floor(Math.random() * ALL_WORDS.length);
+
+  return ALL_WORDS[randIdx];
+};
+
 export const isWinner = (word) => {
   return word.toLowerCase() === getSolution();
 };
